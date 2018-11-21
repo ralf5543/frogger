@@ -1,24 +1,32 @@
 //IIFE to make the code private
 let app = (function () {
 
+  const canvasWrapper = document.querySelector('.frogger__canvasWrapper');
+  const characters = document.querySelector('.frogger__charsList');
+
   const tilesHeight = 83;
   const tilesWidth = 101;
   const topEmptyMargin = 45;// the space between the first row and the top of the canvas element
 
   const scoreContainer = document.querySelector('.js-score');
   let score = 0;
-  let lives = 3;
   const livesContainer = document.querySelector('.js-lives');
   const heart = '<img src="images/Heart.png" class="frogger__life" alt="">';
 
   let allEnemies = [];
   let allGems = [];
+  let lives = 3;
 
   const resetBtn = document.querySelector('.js-reset');
 
-  resetBtn.addEventListener('click', function () {
+  resetBtn.addEventListener('click', () => {
     resetGame();
   });
+
+  const displayGame = () => {
+    canvasWrapper.classList.remove('is-hidden');
+    characters.classList.add('is-hidden');
+  };
 
   //======================================----------------------------- Mobile controls
   const btnUp = document.querySelector('.js-btnUp');
@@ -26,7 +34,7 @@ let app = (function () {
   const btnDown = document.querySelector('.js-btnDown');
   const btnLeft = document.querySelector('.js-btnLeft');
 
-  btnUp.addEventListener('click', function () {
+  btnUp.addEventListener('click', () => {
     if (player.y >= (player.initialPosition - (4 * tilesHeight))) {
       player.y = player.y - tilesHeight;
 
@@ -172,6 +180,7 @@ let app = (function () {
       this.width = 67;
       this.height = 88;
       this.isCarryingGem = false;
+      this.lives = 3;
     }
 
     update(dt) {
@@ -216,8 +225,32 @@ let app = (function () {
     }
   }
 
-  //======================================----------------------------- Instance
+  //======================================----------------------------- Instances
+  const boy = document.querySelector('.js-charBoy');
+  const cat = document.querySelector('.js-cat');
+  const princess = document.querySelector('.js-princess');
+
   const player = new Player();
+
+  boy.addEventListener('click', () => {
+    player.sprite = 'images/char-boy.png';
+    resetGame();
+    displayGame();
+  });
+
+  cat.addEventListener('click', () => {
+    player.sprite = 'images/char-cat-girl.png';
+    player.lives = 9;
+    resetGame();
+    displayGame();
+  });
+
+  princess.addEventListener('click', () => {
+    player.sprite = 'images/char-princess-girl.png';
+    player.lives = 2;
+    resetGame();
+    displayGame();
+  });
 
 
   /* ======================================----------------------------- GEMS -----------------------------====================================== */
@@ -241,6 +274,13 @@ let app = (function () {
           player.y + (80 / 100) * player.height > this.y) {
         player.isCarryingGem = true;
         allGems.splice(0, 1);
+        if (player.sprite = 'images/char-princess-girl.png') {
+          //Strangely, can not write those conditions in a single one...
+          if (lives < player.lives) {
+            lives++;
+            livesContainer.innerHTML += heart;
+          }
+        }
       }
     }
 
@@ -252,31 +292,34 @@ let app = (function () {
   //======================================----------------------------- Instance
   const createGems = () => {
 
-    //we create one of the 3 random gems
-    let choseGem = Math.floor(Math.random() * 3) + 1;
+    if (player.sprite !== 'images/char-cat-girl.png') {
 
-    switch (choseGem) {
-      case 1:
-        const blueGem = new Gem();
-        blueGem.sprite = 'images/Gem-Blue.png';
-        allGems.push(blueGem);
-        break;
 
-      case 2:
-        const greenGem = new Gem();
-        greenGem.sprite = 'images/Gem-Green.png';
-        allGems.push(greenGem);
-        break;
+      //we create one of the 3 random gems
+      let choseGem = Math.floor(Math.random() * 3) + 1;
 
-      case 3:
-        const orangeGem = new Gem();
-        orangeGem.sprite = 'images/Gem-Orange.png';
-        allGems.push(orangeGem);
-        break;
-      default:
-        console.log('gem error');
+      switch (choseGem) {
+        case 1:
+          const blueGem = new Gem();
+          blueGem.sprite = 'images/Gem-Blue.png';
+          allGems.push(blueGem);
+          break;
+
+        case 2:
+          const greenGem = new Gem();
+          greenGem.sprite = 'images/Gem-Green.png';
+          allGems.push(greenGem);
+          break;
+
+        case 3:
+          const orangeGem = new Gem();
+          orangeGem.sprite = 'images/Gem-Orange.png';
+          allGems.push(orangeGem);
+          break;
+        default:
+          console.log('gem error');
+      }
     }
-
   };
 
 
@@ -286,7 +329,7 @@ let app = (function () {
 
   const success = (condition) => {
     document.removeEventListener('keyup', handleKeys);
-
+    console.log('lives dabord : ', lives);
     //if the player succeeded
     if (condition) {
       score++;
@@ -297,7 +340,8 @@ let app = (function () {
     } else {
       lives -= 1;
       livesContainer.innerHTML = null;
-      for (let i = 1; i <= lives; i++) {
+      for (let i = 0; i < lives; i++) {
+        console.log('nb de coeurs ; ', i);
         livesContainer.innerHTML += heart;
       }
       //if no more lives...
@@ -305,6 +349,7 @@ let app = (function () {
         livesContainer.innerHTML = '<p class="frogger__text">You\'re dead...</p>'
       }
     }
+    console.log('hearts lives : ', lives);
     resetStage();
 
     setTimeout(function () {
@@ -317,6 +362,7 @@ let app = (function () {
   const resetStage = () => {
     allGems.splice(0, 1);
     //replace the player at his initial position
+    player.x = 218;
     player.y = player.initialPosition;
     //release the gem
     player.isCarryingGem = false;
@@ -342,8 +388,9 @@ let app = (function () {
   document.addEventListener('keyup', handleKeys);
 
   const resetGame = () => {
+    console.log('lives : ', lives);
     score = 0;
-    lives = 3;
+    lives = player.lives;
     scoreContainer.innerHTML = `Score : ${score} point...`;
     livesContainer.innerHTML = null;
     for (let i = 1; i <= lives; i++) {

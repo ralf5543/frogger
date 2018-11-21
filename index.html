@@ -13,7 +13,29 @@
         <button class="js-reset frogger__reset">Reset</button>
     </header>
 
-    <div class="frogger__canvasWrapper">
+    <h2>Select your character</h2>
+    <ul class="frogger__charsList">
+        <li class="frogger__charsList__element">
+            <button class="frogger__charsList__element__selector js-char js-charBoy">
+                <img src="images/char-boy.png" class="frogger__charsList__element__image" alt="boy">
+            </button>
+            <p class="frogger__charsList__element__desc">Main character. No strengths, no weaknesses... perfect for beginners !</p>
+        </li>
+        <li class="frogger__charsList__element">
+            <button class="frogger__charsList__element__selector js-char js-cat">
+                <img src="images/char-cat-girl.png" class="frogger__charsList__element__image" alt="cat">
+            </button>
+            <p class="frogger__charsList__element__desc">You've got 9 lives, like every cat ! But you're not interested at all in gems, so you can't collect them...</p>
+        </li>
+        <li class="frogger__charsList__element">
+            <button class="frogger__charsList__element__selector js-char js-princess">
+                <img src="images/char-princess-girl.png" class="frogger__charsList__element__image" alt="princess">
+            </button>
+            <p class="frogger__charsList__element__desc">The princess's got only 2 lives. But she can recover 1 every time she catches a gem !</p>
+        </li>
+    </ul>
+
+    <div class="frogger__canvasWrapper is-hidden">
         <ul class="frogger__controls">
             <li class="frogger__controls__element frogger__controls__element--up">
                 <button class="frogger__controls__btn js-btnUp">

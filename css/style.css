@@ -18,6 +18,7 @@ body {
   flex-direction: column;
   max-width: 1280px;
   margin: auto;
+  padding: 8px;
 }
 
 .u-hiddenWording {
@@ -32,6 +33,10 @@ body {
   position: relative;
   width: 100%;
   text-align: center;
+}
+
+.frogger__canvasWrapper.is-hidden {
+  display: none;
 }
 
 canvas {
@@ -76,6 +81,42 @@ canvas {
 .frogger__text {
   margin: 0;
   font-size: 2rem;
+}
+
+/*======================================----------------------------- Characters selection */
+.frogger__charsList {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.frogger__charsList.is-hidden {
+  display: none;
+}
+
+.frogger__charsList__element {
+  display: flex;
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.frogger__charsList__element__selector {
+  border: 0;
+  background-color: #4c67ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.frogger__charsList__element__image {
+  width: 60px;
+}
+
+.frogger__charsList__element__desc {
+  padding: 8px;
+  margin: 0;
+  font-size: 16px;
 }
 
 /*======================================----------------------------- Mobile controls */
