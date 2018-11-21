@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   font-family: sans-serif;
   font-size: 62.5%;
@@ -14,10 +20,23 @@ body {
   margin: auto;
 }
 
+.u-hiddenWording {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.frogger__canvasWrapper {
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+
 canvas {
   width: 100%;
   max-width: 600px;
-  margin: auto;
 }
 
 .frogger__header {
@@ -41,14 +60,84 @@ canvas {
 .frogger__reset {
   font-size: 2rem;
   border: 0;
-  background: #4c67ff;
+  background-color: #4c67ff;
   text-decoration: none;
   cursor: pointer;
   color: white;
   border-radius: 4px;
+  transition: background-color .3s;
+}
+
+.frogger__reset:hover,
+.frogger__reset:focus {
+  background-color: #2f4182;
 }
 
 .frogger__text {
   margin: 0;
   font-size: 2rem;
+}
+
+/*======================================----------------------------- Mobile controls */
+.frogger__controls {
+  position: absolute;
+  bottom: 32px;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.frogger__controls__element {
+  list-style: none;
+  text-align: center;
+}
+
+.frogger__controls__element--up,
+.frogger__controls__element--down {
+  width: 100%;
+}
+.frogger__controls__element--right,
+.frogger__controls__element--left {
+  width: 50%;
+}
+
+.frogger__controls__btn {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  font-size: 3rem;
+  border-radius: 50%;
+  background-color: rgba(256, 256, 256, .4);
+}
+
+.frogger__controls__btn::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.frogger__controls__element--up .frogger__controls__btn::before {
+  content: '▲';
+}
+
+.frogger__controls__element--right .frogger__controls__btn::before {
+  content: '▶';
+}
+
+.frogger__controls__element--down .frogger__controls__btn::before {
+  content: '▼';
+}
+
+.frogger__controls__element--left .frogger__controls__btn::before {
+  content: '◀';
+}
+
+/*======================================----------------------------- Media queries */
+@media (min-width: 640px) {
+  .frogger__controls {
+    display: none;
+  }
 }

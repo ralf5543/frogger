@@ -3,7 +3,7 @@ let app = (function () {
 
   const tilesHeight = 83;
   const tilesWidth = 101;
-  const topEmptyMargin = 45;// the space between the first top tile and the canvas
+  const topEmptyMargin = 45;// the space between the first row and the top of the canvas element
 
   const scoreContainer = document.querySelector('.js-score');
   let score = 0;
@@ -16,8 +16,42 @@ let app = (function () {
 
   const resetBtn = document.querySelector('.js-reset');
 
-  resetBtn.addEventListener('click', function(){
+  resetBtn.addEventListener('click', function () {
     resetGame();
+  });
+
+  //======================================----------------------------- Mobile controls
+  const btnUp = document.querySelector('.js-btnUp');
+  const btnRight = document.querySelector('.js-btnRight');
+  const btnDown = document.querySelector('.js-btnDown');
+  const btnLeft = document.querySelector('.js-btnLeft');
+
+  btnUp.addEventListener('click', function () {
+    if (player.y >= (player.initialPosition - (4 * tilesHeight))) {
+      player.y = player.y - tilesHeight;
+
+      if (player.y === player.initialPosition - (5 * tilesHeight)) {
+        success(true);
+      }
+    }
+  });
+
+  btnRight.addEventListener('click', function () {
+    if (player.x <= tilesWidth * 4) {
+      player.x = player.x + tilesWidth;
+    }
+  });
+
+  btnDown.addEventListener('click', function () {
+    if (player.y < player.initialPosition) {
+      player.y = player.y + tilesHeight;
+    }
+  });
+
+  btnLeft.addEventListener('click', function () {
+    if (player.x >= tilesWidth) {
+      player.x = player.x - tilesWidth;
+    }
   });
 
   //functions to randomly place an item on the canvas grid
@@ -149,9 +183,7 @@ let app = (function () {
     }
 
     handleInput(e) {
-
       //Position the Player in the playground limits
-
       switch (e) {
         case 'up':
           if (this.y >= (this.initialPosition - (4 * tilesHeight))) {
@@ -212,7 +244,6 @@ let app = (function () {
       }
     }
 
-
     render() {
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -266,7 +297,7 @@ let app = (function () {
     } else {
       lives -= 1;
       livesContainer.innerHTML = null;
-      for (let i=1; i<=lives; i++) {
+      for (let i = 1; i <= lives; i++) {
         livesContainer.innerHTML += heart;
       }
       //if no more lives...
@@ -315,7 +346,7 @@ let app = (function () {
     lives = 3;
     scoreContainer.innerHTML = `Score : ${score} point...`;
     livesContainer.innerHTML = null;
-    for (let i=1; i<=lives; i++) {
+    for (let i = 1; i <= lives; i++) {
       livesContainer.innerHTML += heart;
     }
     resetStage();
