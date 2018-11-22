@@ -2,8 +2,8 @@
 
 ## Table of Contents
 
-- [Launching Instructions](#launching instructions)
-- [How to play](#how to play)
+- [Launching Instructions](#Launching-Instructions)
+- [How to play](#how-to-play)
 
 ## Launching Instructions
 You don't need to install anything if you just want to play to this game.
