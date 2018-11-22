@@ -18,7 +18,7 @@ Chose one of the (actually) 3 characters. Each of them has got their own strengt
 ![Characters selection](images/screenshots/frogger_characters.png)
 
 ### Gameplay
-Use your keyboard (or your fingers on a mobile) to guide your characters to the top of the screen. Each time you do so, you get a point. Try to get extra points by picking up gems.
+Use the 4 arrows of your keyboard (or your fingers on a mobile) to guide your characters to the top of the screen. Each time you do so, you get a point. Try to get extra points by picking up gems.
 
 Avoid red and green bugs. Each time they touch you, you lose 1 life point, symbolized by a heart. When your last heart is gone, the game is over.
 ![Game screenshot](images/screenshots/frogger_game.png)
