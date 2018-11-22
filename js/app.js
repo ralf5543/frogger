@@ -23,6 +23,7 @@ let app = (function () {
     resetGame();
   });
 
+  //display the game elements after a character has been chosen
   const displayGame = () => {
     canvasWrapper.classList.remove('is-hidden');
     characters.classList.add('is-hidden');
@@ -183,7 +184,7 @@ let app = (function () {
     }
 
     update(dt) {
-      //console.log('player.char : ', player.char)
+      //nothing in it actually...
     }
 
 
@@ -219,6 +220,7 @@ let app = (function () {
           console.log('move error');
       }
 
+      //if the character has moved till the blue tiles, it's a success
       if (this.y === this.initialPosition - (5 * tilesHeight)) {
         success(true);
       }
@@ -232,6 +234,7 @@ let app = (function () {
 
   const player = new Player();
 
+  //chose a character and launch the game
   boy.addEventListener('click', () => {
     player.sprite = 'images/char-boy.png';
     player.char = 'boy';
@@ -327,6 +330,7 @@ let app = (function () {
   window.setInterval(createEnemies, 1000);
 
   const resetStage = () => {
+    //replace the player
     player.x = 218;
     player.y = player.initialPosition;
     allGems.splice(0, 1);
@@ -337,9 +341,10 @@ let app = (function () {
     createGems();
   };
 
+  //do things either the character has reached the blue tiles, or if he was killed
   const success = (condition) => {
     document.removeEventListener('keyup', handleKeys);
-    //if the player succeeded
+    //if the player succeeded :
     if (condition) {
       score++;
       if (player.isCarryingGem) {
@@ -351,6 +356,7 @@ let app = (function () {
         resetStage();
       }, 1000);
 
+    //if he vas touched by an enemy :
     } else {
       lives -= 1;
       livesContainer.innerHTML = null;

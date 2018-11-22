@@ -1,20 +1,24 @@
-# Classic Arcade Game Clone Project
+# Frogger Project
 
 ## Table of Contents
 
-- [Instructions](#instructions)
-- [Contributing](#contributing)
+- [Launching Instructions](#launching instructions)
+- [How to play](#how to play)
 
-## Instructions
+## Launching Instructions
+You don't need to install anything if you just want to play to this game.
+Simply go to [https://ralf5543.github.io/frogger/](https://ralf5543.github.io/frogger/)
 
-Use this [rubric](https://review.udacity.com/#!/rubrics/2013/view) for self-checking your submission.
+## How to play
+### Goal
+The frogger's goal is to get the maximum points. No timer, you can play until your character dies. No need to rush !
 
-Make sure the functions you write are **object-oriented** - either class functions (like `Player` and `Enemy`) or class prototype functions such as `Enemy.prototype.checkCollisions`. Also make sure that the keyword `this` is used appropriately within your class and class prototype functions to refer to the object the function is called upon.
+### Characters selection
+Chose one of the (actually) 3 characters. Each of them has got their own strengths and weaknesses.
+![Characters selection](images/screenshots/frogger_characters.png)
 
-Your **README.md** file should be updated with instructions on both how to 1. Run and 2. Play your arcade game.
+### Gameplay
+Use your keyboard (or your fingers on a mobile) to guide your characters to the top of the screen. Each time you do so, you get a point. Try to get extra points by picking up gems.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+Avoid red and green bugs. Each time they touch you, you lose 1 life point, symbolized by a heart. When your last heart is gone, the game is over.
+![Game screenshot](images/screenshots/frogger_game.png)

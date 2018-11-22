@@ -31,8 +31,9 @@ body {
 
 .frogger__canvasWrapper {
   position: relative;
-  width: 100%;
   text-align: center;
+  margin: auto;
+  width: 100%;
 }
 
 .frogger__canvasWrapper.is-hidden {
@@ -41,7 +42,6 @@ body {
 
 canvas {
   width: 100%;
-  max-width: 600px;
 }
 
 .frogger__header {
@@ -138,7 +138,7 @@ canvas {
 /*======================================----------------------------- Mobile controls */
 .frogger__controls {
   position: absolute;
-  bottom: 32px;
+  bottom: 8%;
   right: 0;
   margin: 0;
   padding: 0;
@@ -193,7 +193,11 @@ canvas {
 }
 
 /*======================================----------------------------- Media queries */
-@media (min-width: 640px) {
+@media (min-width: 1025px) {
+  .frogger__canvasWrapper {
+    width: auto;
+  }
+
   .frogger__controls {
     display: none;
   }
