@@ -16,7 +16,7 @@ body {
   line-height: 1.45;
   display: flex;
   flex-direction: column;
-  max-width: 1280px;
+  max-width: 1000px;
   margin: auto;
   padding: 8px;
 }
@@ -84,16 +84,22 @@ canvas {
 }
 
 /*======================================----------------------------- Characters selection */
+
+.frogger__charsList__title {
+  font-size: 2rem;
+  text-align: center;
+}
+
+.frogger__charsList__nav.is-hidden {
+  display: none;
+}
+
 .frogger__charsList {
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0;
   padding: 0;
-}
-
-.frogger__charsList.is-hidden {
-  display: none;
 }
 
 .frogger__charsList__element {
@@ -103,10 +109,20 @@ canvas {
 }
 
 .frogger__charsList__element__selector {
-  border: 0;
-  background-color: #4c67ff;
+  background-color: transparent;
   text-decoration: none;
   cursor: pointer;
+  border: 3px dashed #2f4182;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.frogger__charsList__element__selector:hover > img,
+.frogger__charsList__element__selector:focus > img {
+  animation-name: bounce;
+  transform-origin: center bottom;
+  animation-duration: 1s;
+  animation-fill-mode: both;
 }
 
 .frogger__charsList__element__image {
@@ -180,5 +196,66 @@ canvas {
 @media (min-width: 640px) {
   .frogger__controls {
     display: none;
+  }
+
+  .frogger__charsList {
+    flex-direction: row;
+  }
+
+  .frogger__charsList__element {
+    flex-direction: column;
+    flex: 1;
+    margin-right: 32px;
+  }
+
+  .frogger__charsList__element:last-of-type {
+    margin-right: 0;
+  }
+
+  .frogger__charsList__element__selector {
+    align-self: center;
+    margin-right: 0;
+    width: 120px;
+    height: 150px;
+    margin-bottom: 16px;
+  }
+
+  .frogger__charsList__element__image {
+    width: auto;
+  }
+}
+
+
+/*======================================----------------------------- Animations (from animate.css) */
+@keyframes bounce {
+  from,
+  20%,
+  53%,
+  80%,
+  to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40%,
+  43% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -30px, 0);
+  }
+
+  70% {
+    -webkit-animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+
+  90% {
+    -webkit-transform: translate3d(0, -4px, 0);
+    transform: translate3d(0, -4px, 0);
   }
 }

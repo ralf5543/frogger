@@ -2,7 +2,7 @@
 let app = (function () {
 
   const canvasWrapper = document.querySelector('.frogger__canvasWrapper');
-  const characters = document.querySelector('.frogger__charsList');
+  const characters = document.querySelector('.frogger__charsList__nav');
 
   const tilesHeight = 83;
   const tilesWidth = 101;
@@ -107,7 +107,6 @@ let app = (function () {
           player.y + (80 / 100) * player.height > this.y) {
         success(false);
       }
-
     }
 
 
@@ -184,6 +183,7 @@ let app = (function () {
     }
 
     update(dt) {
+      //console.log('player.char : ', player.char)
     }
 
 
@@ -234,12 +234,14 @@ let app = (function () {
 
   boy.addEventListener('click', () => {
     player.sprite = 'images/char-boy.png';
+    player.char = 'boy';
     resetGame();
     displayGame();
   });
 
   cat.addEventListener('click', () => {
     player.sprite = 'images/char-cat-girl.png';
+    player.char = 'cat';
     player.lives = 9;
     resetGame();
     displayGame();
@@ -247,6 +249,7 @@ let app = (function () {
 
   princess.addEventListener('click', () => {
     player.sprite = 'images/char-princess-girl.png';
+    player.char = 'princess';
     player.lives = 2;
     resetGame();
     displayGame();
@@ -274,12 +277,10 @@ let app = (function () {
           player.y + (80 / 100) * player.height > this.y) {
         player.isCarryingGem = true;
         allGems.splice(0, 1);
-        if (player.sprite = 'images/char-princess-girl.png') {
-          //Strangely, can not write those conditions in a single one...
-          if (lives < player.lives) {
-            lives++;
-            livesContainer.innerHTML += heart;
-          }
+
+        if (player.char === 'princess' && lives < player.lives) {
+          lives++;
+          livesContainer.innerHTML += heart;
         }
       }
     }
@@ -292,8 +293,7 @@ let app = (function () {
   //======================================----------------------------- Instance
   const createGems = () => {
 
-    if (player.sprite !== 'images/char-cat-girl.png') {
-
+    if (player.char !== 'cat') {
 
       //we create one of the 3 random gems
       let choseGem = Math.floor(Math.random() * 3) + 1;
@@ -326,10 +326,19 @@ let app = (function () {
   //we create a new enemy every second
   window.setInterval(createEnemies, 1000);
 
+  const resetStage = () => {
+    player.x = 218;
+    player.y = player.initialPosition;
+    allGems.splice(0, 1);
+
+    //release the gem
+    player.isCarryingGem = false;
+    //create new gem at a random place
+    createGems();
+  };
 
   const success = (condition) => {
     document.removeEventListener('keyup', handleKeys);
-    console.log('lives dabord : ', lives);
     //if the player succeeded
     if (condition) {
       score++;
@@ -337,74 +346,63 @@ let app = (function () {
         score = score + 1;
       }
       scoreContainer.textContent = `Score : ${score} point(s) !`;
+
+      setTimeout(function () {
+        resetStage();
+      }, 1000);
+
     } else {
       lives -= 1;
       livesContainer.innerHTML = null;
       for (let i = 0; i < lives; i++) {
-        console.log('nb de coeurs ; ', i);
         livesContainer.innerHTML += heart;
       }
       //if no more lives...
       if (lives === 0) {
         livesContainer.innerHTML = '<p class="frogger__text">You\'re dead...</p>'
       }
+      resetStage();
     }
-    console.log('hearts lives : ', lives);
-    resetStage();
-
     setTimeout(function () {
-      player.x = 218;
-      player.y = (tilesHeight * 6) - topEmptyMargin;
       document.addEventListener('keyup', handleKeys);
     }, 1000);
   };
 
-  const resetStage = () => {
-    allGems.splice(0, 1);
-    //replace the player at his initial position
-    player.x = 218;
-    player.y = player.initialPosition;
-    //release the gem
-    player.isCarryingGem = false;
-    //create new gem at a random place
-    createGems();
-  };
-
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-  const handleKeys = (e) => {
-    const allowedKeys = {
-      37: 'left',
-      38: 'up',
-      39: 'right',
-      40: 'down'
+    const handleKeys = (e) => {
+      const allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+      };
+
+      if (lives > 0) {
+        player.handleInput(allowedKeys[e.keyCode]);
+      }
     };
 
-    if (lives > 0) {
-      player.handleInput(allowedKeys[e.keyCode]);
-    }
-  };
+    document.addEventListener('keyup', handleKeys);
 
-  document.addEventListener('keyup', handleKeys);
+    const resetGame = () => {
+      score = 0;
+      lives = player.lives;
+      scoreContainer.innerHTML = `Score : ${score} point...`;
+      livesContainer.innerHTML = null;
+      for (let i = 1; i <= lives; i++) {
+        livesContainer.innerHTML += heart;
+      }
+      resetStage();
+    };
+    resetGame();
 
-  const resetGame = () => {
-    console.log('lives : ', lives);
-    score = 0;
-    lives = player.lives;
-    scoreContainer.innerHTML = `Score : ${score} point...`;
-    livesContainer.innerHTML = null;
-    for (let i = 1; i <= lives; i++) {
-      livesContainer.innerHTML += heart;
-    }
-    resetStage();
-  };
-  resetGame();
+    //returns the properties we want to be public (i.e. used by engine.js file)
+    return {
+      allEnemies: allEnemies,
+      player: player,
+      allGems: allGems
+    };
 
-  //returns the properties we want to be public (i.e. used by engine.js file)
-  return {
-    allEnemies: allEnemies,
-    player: player,
-    allGems: allGems
-  };
-
-})();
+  }
+)();
